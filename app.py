@@ -1,5 +1,5 @@
 from flask import Flask
-from helpers import get_pokemon_by_name
+from helpers import get_pokemon_by_name, get_random_pokemon_list
 
 
 app = Flask(__name__)
@@ -8,13 +8,13 @@ app = Flask(__name__)
 
 @app.get("/")
 def pokemon_list():
-    return "Charmander, pikachu, eevee, bulbasaur, diglett"
+    return ', '.join([pokemon['name'] for pokemon in get_random_pokemon_list()]).capitalize()
 
 
 @app.get("/<pokemon_name>")
 def pokemon_data(pokemon_name):
     pokemon = get_pokemon_by_name(pokemon_name)
-    return f"This is {pokemon ['name']}.\n" \
+    return f"This is {pokemon ['name'].capitalize()}.\n" \
             f"Height: {pokemon['height']}.\n" \
             f"Weight: {pokemon['weight']}.\n" \
             f"Base experience: {pokemon['base_experience']}.\n" \
